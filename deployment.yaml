@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resume-app
+  template:
+    metadata:
+      labels:
+        app: resume-app
+    spec:
+      containers:
+      - name: resume-app
+        image: tharunkumar005vt-eng/resume-app:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resume-service
+spec:
+  type: NodePort
+  selector:
+    app: resume-app
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30010
